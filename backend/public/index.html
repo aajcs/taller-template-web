@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infografía del Proyecto SisGeMan - Transformando Incamar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #e0f7fa;
+      }
+      .kpi-card {
+        background-color: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow:
+          0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .kpi-card:hover {
+        transform: translateY(-5px);
+        box-shadow:
+          0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+      .kpi-number {
+        font-size: 3rem;
+        font-weight: 900;
+        color: #007bff;
+      }
+      .kpi-label {
+        font-size: 1rem;
+        color: #333333;
+        margin-top: 0.5rem;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 350px;
+        max-height: 400px;
+      }
+      .flow-step {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding-bottom: 2rem;
+      }
+      .flow-step:not(:last-child)::after {
+        content: "▼";
+        position: absolute;
+        left: 1.25rem;
+        bottom: 0;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        color: #87ceeb;
+      }
+      .flow-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-right: 1.5rem;
+      }
+    </style>
+  </head>
+  <body class="text-[#333333]">
+    <header class="bg-[#007BFF] text-white text-center py-12 px-4">
+      <h1 class="text-4xl md:text-5xl font-black">PROYECTO SISGEMAN</h1>
+      <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">
+        Transformando la Gestión Operativa de Incamar: De la Reacción a la
+        Predicción
+      </p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+      <section id="challenge" class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-2">
+          El Desafío Operativo de Incamar
+        </h2>
+        <p class="text-center text-lg mb-8 max-w-4xl mx-auto">
+          Incamar, una empresa en pleno crecimiento, enfrenta riesgos críticos
+          debido a procesos manuales y sistemas fragmentados. La falta de una
+          herramienta integrada genera ineficiencias, costos elevados y pone en
+          peligro la continuidad del servicio.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="kpi-card">
+            <div class="kpi-number">9</div>
+            <div class="kpi-label">Embarcaciones Activas</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number">~20%</div>
+            <div class="kpi-label">Cobertura del Sistema Actual</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number">3</div>
+            <div class="kpi-label">Almacenes sin Control Central</div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="pain-points"
+        class="bg-white rounded-lg shadow-lg p-6 md:p-10 mb-16"
+      >
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Puntos de Dolor: ¿Dónde se Pierde Valor?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4 text-[#007BFF]">
+              Dependencia de Procesos Manuales
+            </h3>
+            <p class="mb-6">
+              El registro de datos críticos, como las horas de uso, se realiza a
+              través de WhatsApp y hojas de cálculo. Este método es propenso a
+              errores, duplicidad y pérdida de información, creando una base de
+              datos poco fiable para la toma de decisiones.
+            </p>
+            <div class="bg-[#E0F7FA] p-4 rounded-lg">
+              <h4 class="font-bold mb-2">Consecuencias Directas:</h4>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Pérdida de contratos por fallas.</li>
+                <li>Costos elevados por mantenimientos correctivos.</li>
+                <li>Deterioro de la imagen empresarial.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="manualProcessChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section id="solution" class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-8">
+          La Solución: Un Ecosistema Integrado
+        </h2>
+        <p class="text-center text-lg mb-8 max-w-4xl mx-auto">
+          SisGeMan es una aplicación web diseñada para centralizar y automatizar
+          las operaciones clave, proporcionando una visión 360° del negocio y
+          permitiendo una gestión proactiva.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">🔧</div>
+            <h3 class="text-xl font-bold mb-2">Gestión de Mantenimiento</h3>
+            <p>
+              Planificación, ejecución y seguimiento de mantenimientos
+              preventivos y correctivos.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">📦</div>
+            <h3 class="text-xl font-bold mb-2">Control de Inventario</h3>
+            <p>
+              Visibilidad en tiempo real del stock de repuestos en los 3
+              almacenes.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">📊</div>
+            <h3 class="text-xl font-bold mb-2">Control Operativo</h3>
+            <p>
+              Registro centralizado de horas de uso para alimentar el
+              mantenimiento predictivo.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">🔔</div>
+            <h3 class="text-xl font-bold mb-2">Alertas y Reportes</h3>
+            <p>
+              Dashboard y notificaciones automáticas para decisiones basadas en
+              datos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="impact"
+        class="bg-white rounded-lg shadow-lg p-6 md:p-10 mb-16"
+      >
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Impacto y Prioridades Críticas
+        </h2>
+        <p class="text-center text-lg mb-8 max-w-4xl mx-auto">
+          La implementación de SisGeMan se enfocará en las áreas que el
+          stakeholder, Gary Jiménez, identificó como las más críticas para
+          mejorar en el corto plazo, asegurando un retorno de inversión rápido y
+          tangible.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="chart-container h-[400px] md:h-[450px]">
+            <canvas id="prioritiesChart"></canvas>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-4 text-[#007BFF]">
+              Beneficios Cuantificables
+            </h3>
+            <p class="mb-6">
+              Al abordar estas prioridades, SisGeMan no solo optimiza procesos,
+              sino que genera un impacto directo en la rentabilidad y
+              sostenibilidad del negocio.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <span class="text-green-500 text-2xl mr-3">✔</span>
+                <div>
+                  <h4 class="font-bold">Reducción de Tiempos de Inactividad</h4>
+                  <p>
+                    El mantenimiento predictivo minimiza las fallas inesperadas
+                    de las embarcaciones.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-green-500 text-2xl mr-3">✔</span>
+                <div>
+                  <h4 class="font-bold">Optimización de Capital</h4>
+                  <p>
+                    Un control de inventario preciso evita compras innecesarias
+                    o de emergencia.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="text-green-500 text-2xl mr-3">✔</span>
+                <div>
+                  <h4 class="font-bold">Fiabilidad de Datos</h4>
+                  <p>
+                    La centralización elimina errores manuales y proporciona una
+                    única fuente de verdad.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Transformando el Flujo de Trabajo
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div class="p-6 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
+            <h3 class="text-2xl font-bold mb-4">
+              Flujo Actual: Reactivo y Fragmentado
+            </h3>
+            <div class="flow-step">
+              <div class="flow-icon bg-red-200 text-red-700">1</div>
+              <div>
+                <h4 class="font-bold">Reporte Manual</h4>
+                <p>El operador envía horas de uso por WhatsApp.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon bg-red-200 text-red-700">2</div>
+              <div>
+                <h4 class="font-bold">Transcripción</h4>
+                <p>Un encargado ingresa los datos al sistema antiguo.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon bg-red-200 text-red-700">3</div>
+              <div>
+                <h4 class="font-bold">Verificación Física</h4>
+                <p>
+                  Se debe ir a los almacenes para verificar stock de repuestos.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon bg-red-200 text-red-700">4</div>
+              <div>
+                <h4 class="font-bold">Decisión Subjetiva</h4>
+                <p>
+                  El mantenimiento se decide por observación o cuando ocurre una
+                  falla.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-green-50 border-l-4 border-green-500 rounded-r-lg">
+            <h3 class="text-2xl font-bold mb-4">
+              Flujo con SisGeMan: Proactivo e Integrado
+            </h3>
+            <div class="flow-step">
+              <div class="flow-icon bg-green-200 text-green-700">1</div>
+              <div>
+                <h4 class="font-bold">Registro Directo</h4>
+                <p>El operador ingresa horas de uso en la aplicación web.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon bg-green-200 text-green-700">2</div>
+              <div>
+                <h4 class="font-bold">Alerta Automática</h4>
+                <p>
+                  El sistema notifica sobre mantenimientos próximos y stock
+                  bajo.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon bg-green-200 text-green-700">3</div>
+              <div>
+                <h4 class="font-bold">Orden de Servicio Digital</h4>
+                <p>
+                  Se crea una orden de servicio, asignando tareas y repuestos
+                  del stock.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon bg-green-200 text-green-700">4</div>
+              <div>
+                <h4 class="font-bold">Mantenimiento Planificado</h4>
+                <p>
+                  Se ejecuta el mantenimiento de forma preventiva, minimizando
+                  riesgos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-[#333333] text-white text-center p-6 mt-16">
+      <p>
+        &copy; 2025 Proyecto SisGeMan para Incamar. Desarrollado por Equipo 03.
+      </p>
+    </footer>
+
+    <script>
+      const brilliantBluesPalette = {
+        primary: "#007BFF",
+        secondary: "#00BFFF",
+        accent: "#87CEEB",
+        background: "#E0F7FA",
+        text: "#333333",
+        red: "#FF5A5F",
+        green: "#28A745",
+      };
+
+      const tooltipConfig = {
+        plugins: {
+          tooltip: {
+            callbacks: {
+              title: function (tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(" ");
+                } else {
+                  return label;
+                }
+              },
+            },
+          },
+        },
+      };
+
+      function wrapLabel(label, maxLength = 16) {
+        if (label.length <= maxLength) {
+          return label;
+        }
+        const words = label.split(" ");
+        const lines = [];
+        let currentLine = "";
+        words.forEach((word) => {
+          if ((currentLine + " " + word).length > maxLength) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine += (currentLine ? " " : "") + word;
+          }
+        });
+        lines.push(currentLine);
+        return lines;
+      }
+
+      const manualProcessCtx = document
+        .getElementById("manualProcessChart")
+        .getContext("2d");
+      new Chart(manualProcessCtx, {
+        type: "doughnut",
+        data: {
+          labels: [
+            "Riesgo de Error Humano",
+            "Pérdida de Tiempo",
+            "Datos No Fiables",
+            "Falta de Trazabilidad",
+          ],
+          datasets: [
+            {
+              label: "Problemas del Proceso Manual",
+              data: [40, 25, 20, 15],
+              backgroundColor: [
+                brilliantBluesPalette.red,
+                brilliantBluesPalette.accent,
+                brilliantBluesPalette.secondary,
+                "#FFA500",
+              ],
+              borderColor: "#FFFFFF",
+              borderWidth: 4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            ...tooltipConfig.plugins,
+            legend: {
+              position: "bottom",
+            },
+            title: {
+              display: true,
+              text: "Distribución de Problemas del Proceso Actual",
+              font: { size: 16 },
+            },
+          },
+        },
+      });
+
+      const prioritiesCtx = document
+        .getElementById("prioritiesChart")
+        .getContext("2d");
+      const rawLabels = [
+        "Control del Almacén",
+        "Plan de Mantenimiento Actualizado",
+        "Registro Fiable de Horas de Uso",
+      ];
+      const wrappedLabels = rawLabels.map((label) => wrapLabel(label));
+
+      new Chart(prioritiesCtx, {
+        type: "bar",
+        data: {
+          labels: wrappedLabels,
+          datasets: [
+            {
+              label: "Nivel de Criticidad (según Stakeholder)",
+              data: [95, 90, 85],
+              backgroundColor: [
+                brilliantBluesPalette.primary,
+                brilliantBluesPalette.secondary,
+                brilliantBluesPalette.accent,
+              ],
+              borderColor: [brilliantBluesPalette.primary],
+              borderWidth: 1,
+              borderRadius: 5,
+            },
+          ],
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+              title: {
+                display: true,
+                text: "Puntuación de Criticidad",
+              },
+            },
+          },
+          plugins: {
+            ...tooltipConfig.plugins,
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "Prioridades Críticas para el MVP",
+              font: { size: 16 },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
