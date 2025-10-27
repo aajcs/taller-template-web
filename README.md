@@ -1,2 +1,3 @@
-# taller-template-web
-plantilla de taller (reparaciones, venta de repuesto, venta de carros)
+# WebServer + RestServer
+
+Recuerden que deben de ejecutar ```npm install``` para reconstruir los módulos de Node.
