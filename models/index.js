@@ -33,30 +33,13 @@ const Simulacion = require("./simulacion");
 const Tanque = require("./tanque");
 const TipoProducto = require("./tipoProducto");
 const Torre = require("./torre");
-const Usuario = require("./usuario");
-const Inventario = require("./inventario");
 const Partida = require("./partida");
 const Operador = require("./operador");
 const Factura = require("./factura");
 const CorteRefinacion = require("./corteRefinacion");
 const Cuenta = require("./cuenta");
 const Balance = require("./balance");
-const Bunkering = require("./bunkering/bunkering");
-const Muelle = require("./bunkering/muelle");
-const Embarcacion = require("./bunkering/embarcacion");
-const TanqueBK = require("./bunkering/tanqueBK");
-const RecepcionBK = require("./bunkering/recepcionBK");
-const DespachoBK = require("./bunkering/despachoBK");
-const lineaCargaBK = require("./bunkering/lineaCargaBK");
-const lineaDespachoBK = require("./bunkering/lineaDespachoBK");
-const OperadorBK = require("./bunkering/operadorBK");
-const ContactoBK = require("./bunkering/contactoBK");
-const ProductoBK = require("./bunkering/productoBK");
-const TipoProductoBK = require("./bunkering/tipoProductoBK");
-const CuentaBK = require("./bunkering/cuentaBK");
-const ContratoBK = require("./bunkering/contratoBK");
-const ChequeoCalidadBK = require("./bunkering/chequeoCalidadBK");
-const ChequeoCantidadBK = require("./bunkering/chequeoCantidadBK");
+
 const notification = require("./notification");
 
 module.exports = {
@@ -77,18 +60,13 @@ module.exports = {
   Cuenta,
   // CostoBunker,
   Despacho,
-  DespachoBK,
   Historial,
   LineaCarga,
-  lineaCargaBK,
   LineaDespacho,
-  lineaDespachoBK,
   // LineaCargaBunker,
   Producto,
-  ProductoBK,
   // ProductoBunker,
   Recepcion,
-  RecepcionBK,
   // RecepcionBunker,
   Refinacion,
   RefinacionSalida,
@@ -97,25 +75,13 @@ module.exports = {
   Simulacion,
   Tanque,
   TipoProducto,
-  TipoProductoBK,
   Torre,
-  Usuario,
-  Inventario,
   Partida,
   Refineria,
   Operador,
   Factura,
   CorteRefinacion,
-  Bunkering,
-  Muelle,
-  Embarcacion,
-  TanqueBK,
-  OperadorBK,
-  ContactoBK,
-  CuentaBK,
-  ContratoBK,
-  ChequeoCantidadBK,
-  ChequeoCalidadBK,
+
   Abono,
   notification,
   Balance,

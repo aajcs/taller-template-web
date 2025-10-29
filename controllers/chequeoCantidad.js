@@ -6,7 +6,7 @@ const Despacho = require("../models/despacho");
 const Tanque = require("../models/tanque");
 const mongoose = require("mongoose"); // Importar mongoose
 const NotificationService = require("../services/notificationService");
-const usuario = require("../models/usuario");
+const usuario = require("../models/user");
 
 // Opciones de población reutilizables para consultas
 const populateOptions = [

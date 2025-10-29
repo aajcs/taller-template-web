@@ -14,7 +14,7 @@ const TorreSchema = Schema(
     },
 
     // Relación con el usuario que creó la torre (auditoría)
-    createdBy: { type: Schema.Types.ObjectId, ref: "Usuario", required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
     // Nombre de la torre
     nombre: {
@@ -75,7 +75,7 @@ const TorreSchema = Schema(
       {
         modificadoPor: {
           type: Schema.Types.ObjectId,
-          ref: "Usuario",
+          ref: "User",
           required: true,
         },
         fecha: { type: Date, default: Date.now },

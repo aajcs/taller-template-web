@@ -2,7 +2,7 @@ const { response, request } = require("express");
 const CorteRefinacion = require("../models/corteRefinacion");
 const Tanque = require("../models/tanque"); // Importar el modelo Tanque
 const NotificationService = require("../services/notificationService");
-const usuario = require("../models/usuario");
+const usuario = require("../models/user");
 
 // Opciones de población reutilizables
 const populateOptions = [

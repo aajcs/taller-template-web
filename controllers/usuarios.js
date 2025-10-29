@@ -9,7 +9,7 @@ const populateOptions = [
     populate: { path: "modificadoPor", select: "nombre correo" },
   }, // Popula historial.modificadoPor en el array
 ];
-const Usuario = require("../models/usuario"); // Modelo de Usuario para interactuar con la base de datos
+const Usuario = require("../models/user"); // Modelo de Usuario para interactuar con la base de datos
 const { generarJWT } = require("../helpers"); // Función para generar tokens JWT
 
 // Controlador para obtener todos los usuarios no eliminados

@@ -5,7 +5,7 @@ const Recepcion = require("../models/recepcion");
 const Despacho = require("../models/despacho");
 const Tanque = require("../models/tanque");
 const NotificationService = require("../services/notificationService");
-const usuario = require("../models/usuario");
+const usuario = require("../models/user");
 const Producto = require("../models/producto");
 
 // Opciones de población reutilizables para consultas (sin populate anidado)
@@ -104,8 +104,8 @@ const chequeoCalidadGets = async (req = request, res = response, next) => {
     const [total, chequeoCalidads] = await Promise.all([
       ChequeoCalidad.countDocuments(query),
       ChequeoCalidad.find(query)
-      .sort({ createdAt: -1 }) // Ordena del más nuevo al más antiguo
-      .populate(populateOptions),
+        .sort({ createdAt: -1 }) // Ordena del más nuevo al más antiguo
+        .populate(populateOptions),
     ]);
 
     // Popular idTipoProducto manualmente si existe

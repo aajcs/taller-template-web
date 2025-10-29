@@ -4,7 +4,7 @@ const contratoItems = require("../models/contratoItems");
 const Cuenta = require("../models/cuenta");
 const Recepcion = require("../models/recepcion");
 const Despacho = require("../models/despacho");
-const usuario = require("../models/usuario");
+const usuario = require("../models/user");
 const notification = require("../models/notification");
 const admin = require("firebase-admin");
 const { sendEmail } = require("../utils/resend");
@@ -463,7 +463,6 @@ const contratoPut = async (req, res = response, next) => {
       await contratoActualizado.save();
     }
 
-
     // Sincronizar la cuenta asociada al contrato
     let cuentaExistente = await Cuenta.findOne({ idContrato: id });
 
@@ -487,7 +486,7 @@ const contratoPut = async (req, res = response, next) => {
         montoTotalContrato: montoTotalContrato,
         montoPagado: montoPagado,
         montoPendiente: montoPendiente,
-        fechaCuenta: contratoActualizado.fechaInicio
+        fechaCuenta: contratoActualizado.fechaInicio,
       });
 
       await nuevaCuenta.save();
@@ -506,8 +505,13 @@ const contratoPut = async (req, res = response, next) => {
       await cuentaExistente.save();
     }
     // Log para depuración
-    const cuentaDebug = await Cuenta.findOne({ idContrato: contratoActualizado._id });
-    console.log('Cuenta asociada después de PUT:', cuentaDebug ? cuentaDebug.fechaCuenta : null);
+    const cuentaDebug = await Cuenta.findOne({
+      idContrato: contratoActualizado._id,
+    });
+    console.log(
+      "Cuenta asociada después de PUT:",
+      cuentaDebug ? cuentaDebug.fechaCuenta : null
+    );
 
     // Validar balance pendiente después de todas las operaciones
     if (contratoActualizado.montoPendiente < 0) {

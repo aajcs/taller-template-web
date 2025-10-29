@@ -1,43 +1,43 @@
-// Importación del modelo Usuario
-const Usuario = require("../models/usuario"); // Modelo Usuario para interactuar con la base de datos
+// Importación del modelo User
+const User = require("../models/user"); // Modelo User para interactuar con la base de datos
 // const Mensaje = require("../models/mensaje"); // (Comentado) Modelo Mensaje para manejar mensajes (si se implementa en el futuro)
 
 // Función para marcar un usuario como conectado
-const usuarioConectado = async (id) => {
+const userConnected = async (id) => {
   // Busca al usuario por su ID en la base de datos
-  const usuario = await Usuario.findById(id);
-  if (!usuario) {
+  const user = await User.findById(id);
+  if (!user) {
     return false; // Retorna false si el usuario no existe
   }
 
   // Marca al usuario como conectado (online)
-  usuario.online = true;
-  await usuario.save(); // Guarda los cambios en la base de datos
+  user.online = true;
+  await user.save(); // Guarda los cambios en la base de datos
 
-  return usuario; // Retorna el usuario actualizado
+  return user; // Retorna el usuario actualizado
 };
 
 // Función para marcar un usuario como desconectado
-const usuarioDesconectado = async (id) => {
+const userDisconnected = async (id) => {
   // Busca al usuario por su ID en la base de datos
-  const usuario = await Usuario.findById(id);
-  if (!usuario) {
+  const user = await User.findById(id);
+  if (!user) {
     return false; // Retorna false si el usuario no existe
   }
 
   // Marca al usuario como desconectado (offline)
-  usuario.online = false;
-  await usuario.save(); // Guarda los cambios en la base de datos
+  user.online = false;
+  await user.save(); // Guarda los cambios en la base de datos
 
-  return usuario; // Retorna el usuario actualizado
+  return user; // Retorna el usuario actualizado
 };
 
 // Función para obtener todos los usuarios ordenados por su estado (online primero)
-const getUsuarios = async () => {
+const getUsers = async () => {
   // Busca todos los usuarios y los ordena por el campo "online" en orden descendente
-  const usuarios = await Usuario.find().sort("-online");
+  const users = await User.find().sort("-online");
 
-  return usuarios; // Retorna la lista de usuarios
+  return users; // Retorna la lista de usuarios
 };
 
 // (Comentado) Función para grabar un mensaje en la base de datos
@@ -55,8 +55,8 @@ const getUsuarios = async () => {
 
 // Exporta las funciones para que puedan ser utilizadas en otros módulos
 module.exports = {
-  usuarioConectado, // Marca un usuario como conectado
-  usuarioDesconectado, // Marca un usuario como desconectado
-  getUsuarios, // Obtiene todos los usuarios ordenados por estado
+  userConnected, // Marca un usuario como conectado
+  userDisconnected, // Marca un usuario como desconectado
+  getUsers, // Obtiene todos los usuarios ordenados por estado
   // grabarMensaje // (Comentado) Función para grabar mensajes
 };

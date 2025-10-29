@@ -8,8 +8,7 @@ const admin = require("firebase-admin");
 const { dbConnection } = require("../database/config");
 const Sockets = require("./sockets");
 const errorHandler = require("../middlewares/error-handler");
-// const tipoProductoBK = require("./bunkering/tipoProductoBK");
-// const productoBK = require("./bunkering/productoBK");asdas
+// (bunkering-related modules were removed from this file)
 
 // Inicializa Firebase Admin solo si no está inicializado
 if (!admin.apps.length) {
@@ -32,8 +31,10 @@ class Server {
       balance: "/api/balance",
       categorias: "/api/categorias",
       producto: "/api/producto",
-      usuarios: "/api/usuarios",
+      user: "/api/user",
       uploads: "/api/uploads",
+      workshop: "/api/workshop",
+      inventory: "/api/inventory",
       refinerias: "/api/refinerias",
       lineaCarga: "/api/lineaCarga",
       lineaDespacho: "/api/lineaDespacho",
@@ -53,7 +54,6 @@ class Server {
       ventana: "/api/ventana",
       tipoProducto: "/api/tipoProducto",
       simulacion: "/api/simulacion",
-      inventario: "/api/inventario",
       partida: "/api/partida",
       operador: "/api/operador",
       factura: "/api/factura",
@@ -61,35 +61,6 @@ class Server {
       cuenta: "/api/cuenta",
       abono: "/api/abono",
       lineaFactura: "/api/lineaFactura",
-      // bunker: "/api/bunker/bunker",
-      // balanceBunker: "/api/bunker/balanceBunker",
-      // barcaza: "/api/bunker/barcaza",
-      // chequeoCalidadBunker: "/api/bunker/ChequeoCalidadBunker",
-      // chequeoCantidadBunker: "/api/bunker/chequeoCantidadBunker",
-      // productoBunker: "/api/bunker/productoBunker",
-      // contratoBunker: "/api/bunker/contratoBunker",
-      // contactoBunker: "/api/bunker/contactoBunker",
-      // recepcionBunker: "/api/bunker/recepcionBunker",
-      // costoBunker: "/api/bunker/costoBunker",
-      // lineaCargaBunker: "/api/bunker/lineaCargaBunker",
-
-      // Agregar más rutas según sea necesario
-      bunkering: "/api/bunkering/bunkering",
-      muelle: "/api/bunkering/muelleBK",
-      recepcionBK: "/api/bunkering/recepcionBK",
-      despachoBK: "/api/bunkering/despachoBK",
-      lineaCargaBK: "/api/bunkering/lineaCargaBK",
-      embarcacion: "/api/bunkering/embarcacionBK",
-      tanqueBK: "/api/bunkering/tanqueBK",
-      lineaDespachoBK: "/api/bunkering/lineaDespachoBK",
-      operadorBK: "/api/bunkering/operadorBK",
-      contactoBK: "/api/bunkering/contactoBK",
-      productoBK: "/api/bunkering/productoBK",
-      tipoProductoBK: "/api/bunkering/tipoProductoBK",
-      cuentaBK: "/api/bunkering/cuentaBK",
-      contratoBK: "/api/bunkering/contratoBK",
-      chequeoCantidadBK: "/api/bunkering/chequeoCantidadBK",
-      chequeoCalidadBK: "/api/bunkering/chequeoCalidadBK",
       notification: "/api/notification",
     };
 
@@ -152,9 +123,12 @@ class Server {
   }
 
   routes() {
-    // Rutas de autenticación y usuarios
-    this.app.use(this.paths.auth, require("../routes/auth"));
-    this.app.use(this.paths.usuarios, require("../routes/usuarios"));
+    // Rutas de autenticación y usuarios (desde features/)
+    this.app.use(this.paths.auth, require("../features/auth"));
+    this.app.use(this.paths.user, require("../features/user"));
+    this.app.use(this.paths.workshop, require("../features/workshop"));
+    // Inventory feature
+    this.app.use(this.paths.inventory, require("../features/inventory"));
 
     // Rutas de gestión general
     this.app.use(this.paths.ventana, require("../routes/ventana"));
@@ -165,7 +139,6 @@ class Server {
     this.app.use(this.paths.producto, require("../routes/producto"));
     this.app.use(this.paths.tipoProducto, require("../routes/tipoProducto"));
     this.app.use(this.paths.simulacion, require("../routes/simulacion"));
-    this.app.use(this.paths.inventario, require("../routes/inventario"));
     this.app.use(this.paths.partida, require("../routes/partida"));
     this.app.use(this.paths.cuenta, require("../routes/cuenta"));
 
@@ -216,60 +189,7 @@ class Server {
     // Rutas de archivos y cargas
     this.app.use(this.paths.uploads, require("../routes/uploads"));
 
-    // Rutas de bunkering
-    this.app.use(
-      this.paths.bunkering,
-      require("../routes/bunkering/bunkering")
-    );
-    this.app.use(this.paths.muelle, require("../routes/bunkering/muelle"));
-    this.app.use(
-      this.paths.embarcacion,
-      require("../routes/bunkering/embarcacion")
-    );
-    this.app.use(this.paths.tanqueBK, require("../routes/bunkering/tanqueBK"));
-    this.app.use(
-      this.paths.lineaCargaBK,
-      require("../routes/bunkering/lineaCargaBK")
-    );
-    this.app.use(
-      this.paths.lineaDespachoBK,
-      require("../routes/bunkering/lineaDespachoBK")
-    );
-    this.app.use(
-      this.paths.recepcionBK,
-      require("../routes/bunkering/recepcionBK")
-    );
-    this.app.use(
-      this.paths.despachoBK,
-      require("../routes/bunkering/despachoBK")
-    );
-    this.app.use(
-      this.paths.productoBK,
-      require("../routes/bunkering/productoBK")
-    );
-    this.app.use(
-      this.paths.tipoProductoBK,
-      require("../routes/bunkering/tipoProductoBK")
-    );
-    this.app.use(
-      this.paths.contactoBK,
-      require("../routes/bunkering/contactoBK")
-    );
-    this.app.use(this.paths.cuentaBK, require("../routes/bunkering/cuentaBK"));
-
-    this.app.use(
-      this.paths.contratoBK,
-      require("../routes/bunkering/contratoBK")
-    );
-
-    this.app.use(
-      this.paths.chequeoCantidadBK,
-      require("../routes/bunkering/chequeoCantidadBK")
-    );
-    this.app.use(
-      this.paths.chequeoCalidadBK,
-      require("../routes/bunkering/chequeoCalidadBK")
-    );
+    // (Se eliminaron las rutas y requerimientos relacionados con bunkering)
     this.app.use(this.paths.notification, require("../routes/notification"));
 
     // Rutas FCM
@@ -292,55 +212,8 @@ class Server {
         res.status(500).json({ error: error.message });
       }
     });
-    // this.app.post("/api/save-token", (req, res) => {
-    //   const { token } = req.body;
-    //   // Aquí deberías guardar el token en tu base de datos
-    //   console.log("Token recibido:", token);
-    //   res.status(200).send("Token guardado");
-    // });
-    // this.app.use("/api/send-notification", require("../routes/fcm")); // Asume que tienes un router para FCM
-    this.app.use("/api/save-token", require("../routes/notificationToken")); // Router dedicado para guardar tokens
-    // Rutas específicas del módulo Bunker
-    // const bunkerRoutes = "../routes/bunker";
-    // this.app.use(this.paths.bunker, require(`${bunkerRoutes}/bunker`));
-    // this.app.use(
-    //   this.paths.balanceBunker,
-    //   require(`${bunkerRoutes}/balanceBunker`)
-    // );
-    // this.app.use(this.paths.barcaza, require(`${bunkerRoutes}/barcaza`));
-    // this.app.use(
-    //   this.paths.chequeoCalidadBunker,
-    //   require(`${bunkerRoutes}/chequeoCalidadBunker`)
-    // );
-    // this.app.use(
-    //   this.paths.chequeoCantidadBunker,
-    //   require(`${bunkerRoutes}/chequeoCantidadBunker`)
-    // );
-    // this.app.use(
-    //   this.paths.contactoBunker,
-    //   require(`${bunkerRoutes}/contactoBunker`)
-    // );
-    // this.app.use(
-    //   this.paths.contratoBunker,
-    //   require(`${bunkerRoutes}/contratoBunker`)
-    // );
-    // this.app.use(
-    //   this.paths.costoBunker,
-    //   require(`${bunkerRoutes}/costoBunker`)
-    // );
 
-    // this.app.use(
-    //   this.paths.lineaCargaBunker,
-    //   require(`${bunkerRoutes}/lineaCargaBunker`)
-    // );
-    // this.app.use(
-    //   this.paths.productoBunker,
-    //   require(`${bunkerRoutes}/productoBunker`)
-    // );
-    // this.app.use(
-    //   this.paths.recepcionBunker,
-    //   require(`${bunkerRoutes}/recepcionBunker`)
-    // );
+    this.app.use("/api/save-token", require("../routes/notificationToken")); // Router dedicado para guardar tokens
   }
 
   configurarSockets() {

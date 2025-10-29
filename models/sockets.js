@@ -1,9 +1,9 @@
 const { comprobarJWT } = require("../helpers/jwt");
 const {
-  usuarioConectado,
-  usuarioDesconectado,
+  userConnected,
+  userDisconnected,
   // grabarMensaje,
-  getUsuarios,
+  getUsers,
 } = require("../controllers/sockets");
 
 class Sockets {
@@ -23,15 +23,15 @@ class Sockets {
       }
 
       // Mark user as connected
-      const usuario = await usuarioConectado(id);
-      console.log("Cliente conectado:", usuario.nombre);
+      const user = await userConnected(id);
+      console.log("Cliente conectado:", user.nombre);
 
       // Join the user to their specific room
       socket.join(`user-${id}`);
       console.log(`Usuario unido a la sala: user-${id}`);
 
       // Emit a welcome message to the user
-      socket.emit("welcome", `Bienvenido, ${usuario.nombre}`);
+      socket.emit("welcome", `Bienvenido, ${user.nombre}`);
 
       // Listen for custom events (e.g., join-user-room)
       socket.on("join-user-room", (userId) => {
@@ -63,7 +63,7 @@ class Sockets {
       // Marcar en la BD que el usuario se desconecto
       // TODO: Emitir todos los usuarios conectados
       socket.on("disconnect", async () => {
-        await usuarioDesconectado(id);
+        await userDisconnected(id);
         console.log("Cliente desconectado", id);
         this.io.emit("mensaje-from-server");
       });

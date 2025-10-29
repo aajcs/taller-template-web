@@ -3,7 +3,7 @@ const { response, request } = require("express"); // Objetos de Express para man
 const Recepcion = require("../models/recepcion"); // Modelo Recepcion para interactuar con la base de datos
 const Contrato = require("../models/contrato"); // Modelo Contrato para manejar relaciones
 const NotificationService = require("../services/notificationService");
-const usuario = require("../models/usuario");
+const usuario = require("../models/user");
 
 // Opciones de población reutilizables para consultas
 const populateOptions = [

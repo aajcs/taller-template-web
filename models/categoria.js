@@ -8,7 +8,7 @@ const CategoriaSchema = Schema(
       required: [true, "El nombre es obligatorio"],
       unique: true,
       minlength: [3, "El nombre debe tener al menos 3 caracteres"],
-      maxlength: [50, "El nombre no puede exceder los 50 caracteres"]
+      maxlength: [50, "El nombre no puede exceder los 50 caracteres"],
     },
 
     // Estado de la categoría
@@ -21,9 +21,8 @@ const CategoriaSchema = Schema(
     // Relación con el modelo Usuario
     usuario: {
       type: Schema.Types.ObjectId,
-      ref: "Usuario",
+      ref: "User",
       required: true,
-      
     },
   },
   {

@@ -1,6 +1,6 @@
 // notificationService.js
 const admin = require("firebase-admin");
-const usuario = require("../models/usuario");
+const usuario = require("../models/user");
 const { notification } = require("../models");
 const { sendEmail } = require("../utils/resend");
 const templateMails = require("../utils/plantillasMail/templateMails");
